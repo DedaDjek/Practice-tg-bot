@@ -1,0 +1,46 @@
+# Виртуальное окружение
+venv/
+env/
+.env/
+.venv/
+ENV/
+.env.local
+
+# Файлы Python
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# IDE и редакторы
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Файлы с секретами и конфигурацией
+.env
+*.cfg
+*.conf
+!requirements.txt
+
+# Базы данных
+*.db
+*.sqlite
+*.sqlite3
+
+# Логи и временные файлы
+*.log
+*.tmp
+*.temp
+*.cache

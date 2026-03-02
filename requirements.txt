@@ -1,0 +1,9 @@
+SQLAlchemy
+psycopg2-binary
+python-dotenv
+FastAPI
+Uvicorn
+python-telegram-bot
+pandas
+aiofiles
+openpyxl
