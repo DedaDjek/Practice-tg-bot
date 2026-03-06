@@ -16,6 +16,7 @@ from app.api.users import router as users_router
 from app.api.files import router as files_router
 from app.db.db import engine, Base
 from app.telegram.bot import UnifiedTelegramBot
+from app.api.analysis import router as analysis_router
 
 load_dotenv()
 logging.basicConfig(level=logging.INFO)
@@ -30,6 +31,7 @@ app.include_router(messages_router)
 app.include_router(chats_router)
 app.include_router(users_router)
 app.include_router(files_router)
+app.include_router(analysis_router)
 
 telegram_bot = None
 

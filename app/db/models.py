@@ -78,3 +78,19 @@ class File(Base):
     file_size = Column(BigInteger)
     message_id = Column(Integer, ForeignKey("messages.id"))
     created_at = Column(DateTime, default=datetime.utcnow)
+
+class MessageAnalysis(Base):
+    __tablename__ = "message_analyses"
+    
+    id = Column(Integer, primary_key=True)
+    message_id = Column(Integer, ForeignKey("messages.id"), nullable=False)
+    quality_score = Column(Integer)
+    sentiment = Column(String(20))
+    is_question = Column(Boolean, default=False)
+    is_answer = Column(Boolean, default=False)
+    needs_review = Column(Boolean, default=False)
+    tags = Column(String(255))
+    summary = Column(Text)
+    analyzed_at = Column(DateTime, default=datetime.utcnow)
+    
+    message = relationship("Message", backref="analyses")

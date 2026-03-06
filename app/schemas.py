@@ -66,3 +66,35 @@ class ChatExport(BaseModel):
     messages: List[MessageExport]
     start_date: datetime
     end_date: datetime
+
+class MessageAnalysisBase(BaseModel):
+    quality_score: int
+    sentiment: str
+    is_question: bool
+    is_answer: bool
+    needs_review: bool
+    tags: List[str]
+    summary: str
+
+class MessageAnalysisCreate(MessageAnalysisBase):
+    message_id: int
+
+class MessageAnalysis(MessageAnalysisBase):
+    id: int
+    message_id: int
+    analyzed_at: datetime
+    
+    model_config = ConfigDict(from_attributes=True)
+
+class AnalysisRequest(BaseModel):
+    message_ids: List[int]
+
+class AnalysisResponse(BaseModel):
+    message_id: int
+    quality_score: int
+    sentiment: str
+    is_question: bool
+    is_answer: bool
+    needs_review: bool
+    tags: List[str]
+    summary: str

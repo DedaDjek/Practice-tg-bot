@@ -106,3 +106,48 @@ def remove_user_from_chat(db: Session, chat_id: int, user_id: int):
         member.left_at = datetime.utcnow()
         db.commit()
     return member
+
+
+def create_message_analysis(db: Session, analysis_data: Dict[str, Any]):
+    if 'tags' in analysis_data and isinstance(analysis_data['tags'], list):
+        import json
+        analysis_data['tags'] = json.dumps(analysis_data['tags'], ensure_ascii=False)
+    
+    analysis = models.MessageAnalysis(**analysis_data)
+    db.add(analysis)
+    db.commit()
+    db.refresh(analysis)
+    return analysis
+
+def get_message_analyses(db: Session, message_id: int):
+    return db.query(models.MessageAnalysis).filter(
+        models.MessageAnalysis.message_id == message_id
+    ).order_by(models.MessageAnalysis.analyzed_at.desc()).all()
+
+def get_messages_needing_review(db: Session, limit: int = 50):
+    return db.query(models.Message).join(
+        models.MessageAnalysis
+    ).filter(
+        models.MessageAnalysis.needs_review == True
+    ).order_by(
+        models.MessageAnalysis.analyzed_at.desc()
+    ).limit(limit).all()
+
+def get_quality_stats(db: Session, chat_id: Optional[int] = None, days: int = 7):
+    from datetime import datetime, timedelta
+    from sqlalchemy import case
+    
+    query = db.query(
+        func.avg(models.MessageAnalysis.quality_score).label('avg_quality'),
+        func.count(models.MessageAnalysis.id).label('total_analyzed'),
+        func.sum(case((models.MessageAnalysis.needs_review == True, 1), else_=0)).label('needs_review')
+    )
+    
+    if chat_id:
+        query = query.join(models.Message).filter(models.Message.chat_id == chat_id)
+    
+    if days:
+        cutoff = datetime.utcnow() - timedelta(days=days)
+        query = query.filter(models.MessageAnalysis.analyzed_at >= cutoff)
+    
+    return query.first()

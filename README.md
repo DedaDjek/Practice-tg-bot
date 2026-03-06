@@ -13,7 +13,11 @@
 - `TELEGRAM_BOT_TOKEN` - токен бота от @BotFather (пример: 7166543533:AAF_pcGKWZ_iW4xYzAbCdEfGhIjKlMnOpQrStU)
 - `TELEGRAM_ADMIN_IDS` - ID администраторов через запятую (пример: 12345678,87654321)
 
-**Параметры путей:**
+**Параметры файлов:**
 - `DOWNLOAD_PATH` - папка для сохранения файлов (пример: downloads, по умолчанию downloads)
+- `BASE_URL` - для скачивания файлов (пример: http://localhost:8000)
 
-**Пример готового файла .env:**
+**Параметры Yandex GPT**
+- `YANDEX_API_KEY` - API-ключ для доступа к Yandex GPT (пример: AQVN1HHJReSrfo9jU3aopsXrJyfq_UHs)
+- `YANDEX_FOLDER_ID` - идентификатор каталога в Yandex Cloud (пример: b1gd129pp9ha)
+- `YANDEX_MODEL` - модель Yandex GPT (пример: yandexgpt-lite, по умолчанию yandexgpt-lite)
